@@ -4,7 +4,7 @@ import java.util.List;
 public class KMeans {
 	int k;
 	List<SampleData> dataset;
-	List<Integer>[] clusters; // TODO set or list
+	List<Integer>[] clusters; // TODO set or list?
 	SampleData[] centroids;
 	int numOfAttr;
 
@@ -20,7 +20,7 @@ public class KMeans {
 	/**
 	 * This method randomly pick k centroids as the initial centroids
 	 */
-	public void init() {
+	private void init() {
 		for (int i = 0; i < k; i++) {
 			clusters[i] = new ArrayList<Integer>();
 			clusters[i].add(i);
@@ -32,6 +32,17 @@ public class KMeans {
 	 * this method iterats the k-means process, stop until no changes are made.
 	 */
 	public void run() {
+		init();
+		// TODO delete trace
+		System.out.println("initial");
+		for (int i = 0; i < centroids.length; i++) {
+			System.out.print(centroids[i]);
+			System.out.print(" members: ");
+			for (Integer memberIdx : clusters[i]) {
+				System.out.print(dataset.get(memberIdx));
+			}
+			System.out.println("");
+		}
 		boolean changes = true;
 		while (changes) {
 			List<Integer>[] newClusters = initNewClusters();
@@ -58,6 +69,16 @@ public class KMeans {
 			SampleData[] newCentroids = recomputeCentroids(newClusters);
 			clusters = newClusters;
 			centroids = newCentroids;
+			// TODO delete trace
+			System.out.println("new round");
+			for (int i = 0; i < centroids.length; i++) {
+				System.out.print(centroids[i]);
+				System.out.print(" members: ");
+				for (Integer memberIdx : clusters[i]) {
+					System.out.print(dataset.get(memberIdx));
+				}
+				System.out.println("");
+			}
 		}
 	}
 
@@ -69,7 +90,7 @@ public class KMeans {
 			for (int j = 0; j < numOfAttr; j++) {
 				double attrVal = 0;
 				for (int id = 0; id < newClusters[i].size(); id++) {
-					int index = newClusters[i].get(i);
+					int index = newClusters[i].get(id);
 					attrVal += dataset.get(index).attributes.get(j)
 							/ numOfMember;
 				}
@@ -77,6 +98,7 @@ public class KMeans {
 			}
 			newCentroids[i] = newCentroid;
 		}
+
 		return newCentroids;
 	}
 
