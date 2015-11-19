@@ -3,8 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Q3 incorporate the Minhash as a similarity in K-means and compare your
- * results with Kmeans of different meaures(at least two)
+ * Q3 incorporate the Minhash as a similarity in K-means
  * 
  * @author Yi Wan
  *
