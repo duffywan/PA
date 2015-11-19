@@ -17,7 +17,6 @@ public class KmeansWithJaccard extends KMeans {
 					centroid.attributes.get(i));
 			union += sampleData.attributes.get(i) + centroid.attributes.get(i);
 		}
-		System.out.println(intersection / union);
 		return intersection / union;
 	}
 

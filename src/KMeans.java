@@ -72,10 +72,10 @@ public class KMeans {
 			// TODO delete trace
 			System.out.println("new round");
 			for (int i = 0; i < centroids.length; i++) {
-				System.out.print(centroids[i]);
+				System.out.print(i);
 				System.out.print(" members: ");
 				for (Integer memberIdx : clusters[i]) {
-					System.out.print(dataset.get(memberIdx));
+					System.out.print(memberIdx);
 				}
 				System.out.println("");
 			}
@@ -110,8 +110,9 @@ public class KMeans {
 		return newClusters;
 	}
 
-	protected Double calculateDistance(SampleData sampleData, SampleData centroid) {
-		// TODO use edulic distance for now
+	protected Double calculateDistance(SampleData sampleData,
+			SampleData centroid) {
+		// TODO use Edulidean distance for now
 		double rst = 0;
 		for (int i = 0; i < numOfAttr; i++) {
 			rst += Math.pow(
