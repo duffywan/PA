@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class SampleData {
+class SampleData {
 	List<Double> attributes;
 	int cluster;
 	int id;

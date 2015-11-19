@@ -110,7 +110,7 @@ public class KMeans {
 		return newClusters;
 	}
 
-	private Double calculateDistance(SampleData sampleData, SampleData centroid) {
+	protected Double calculateDistance(SampleData sampleData, SampleData centroid) {
 		// TODO use edulic distance for now
 		double rst = 0;
 		for (int i = 0; i < numOfAttr; i++) {
