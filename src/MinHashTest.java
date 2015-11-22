@@ -10,10 +10,11 @@ public class MinHashTest {
 		dataset.add(Arrays.asList(0d, 1d, 0d, 1d));
 		dataset.add(Arrays.asList(1d, 0d, 1d, 1d));
 		dataset.add(Arrays.asList(0d, 0d, 1d, 0d));
+
 		List<List<Double>> dataset1 = new ArrayList<>();
 		dataset1.add(Arrays.asList(1d, 1d, 0d, 0d));
 		dataset1.add(Arrays.asList(0d, 0d, 1d, 1d));
 		MinHash minHash = new MinHash(dataset1);
-		Double[][] sigs = minHash.run();
+		double[][] sigs = minHash.run();
 	}
 }

@@ -36,7 +36,7 @@ public class PreprocessingData {
 		}
 	}
 
-	public List<SampleData> buildDataset() {
+	public List<SampleData> buildDatasetWithTF() {
 		init();
 		for (int i = 0; i < NUM_OF_DOC; i++) {
 			String docPath = DATASET_PATH_PREFIX + i;// TODO
@@ -50,6 +50,35 @@ public class PreprocessingData {
 			for (int j = 0; j < numOfAttr; j++) {
 				if (tf[i].containsKey(j)) {
 					attributes.add((double) tf[i].get(j));
+				} else {
+					attributes.add(0d);
+				}
+			}
+			dataset.add(new SampleData(attributes, i));
+		}
+		return dataset;
+	}
+
+	/**
+	 * if the term i exists in document d, then the document d will have 1 in
+	 * column i, else 0
+	 * 
+	 * @return
+	 */
+	public List<SampleData> buildDatasetWithTE() {
+		init();
+		for (int i = 0; i < NUM_OF_DOC; i++) {
+			String docPath = DATASET_PATH_PREFIX + i;// TODO
+			tokenize(docPath);
+		}
+		List<SampleData> dataset = new ArrayList<>();
+		int numOfAttr = strToId.size();
+		System.out.println(numOfAttr);
+		for (int i = 0; i < NUM_OF_DOC; i++) {
+			List<Double> attributes = new ArrayList<>();
+			for (int j = 0; j < numOfAttr; j++) {
+				if (tf[i].containsKey(j)) {
+					attributes.add(1d);
 				} else {
 					attributes.add(0d);
 				}
@@ -121,15 +150,5 @@ public class PreprocessingData {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void main(String[] args) {
-		PreprocessingData p = new PreprocessingData();
-		List<SampleData> dataset = p.buildDataset();
-		for (int i = 0; i < dataset.size(); i++) {
-			// System.out.println(dataset.get(i));
-		}
-		KmeansWithJaccard km = new KmeansWithJaccard(4, dataset);
-		km.run();
 	}
 }

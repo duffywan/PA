@@ -45,7 +45,8 @@ public class KMeans {
 			System.out.println("");
 		}
 		boolean changes = true;
-		while (changes) {
+		int iterationCount = 0;
+		while (changes && iterationCount < 100) {
 			List<Integer>[] newClusters = initNewClusters();
 			changes = false;
 			for (int dataIndex = 0; dataIndex < dataset.size(); dataIndex++) {
@@ -55,7 +56,8 @@ public class KMeans {
 				int newCluster = currData.cluster;
 				for (int i = 0; i < centroids.length; i++) {
 					SampleData centroid = centroids[i];
-					Double disToCentroid = calculateDistance(currData, centroid);
+					double disToCentroid = calculateDistance(currData, centroid);
+
 					if (disToCentroid < minDis) {
 						minDis = disToCentroid;
 						newCluster = i;
@@ -81,7 +83,9 @@ public class KMeans {
 				}
 				System.out.println("");
 			}
+			iterationCount++;
 		}
+
 	}
 
 	private SampleData[] recomputeCentroids(List<Integer>[] newClusters) {
@@ -112,9 +116,9 @@ public class KMeans {
 		return newClusters;
 	}
 
-	protected Double calculateDistance(SampleData sampleData,
+	protected double calculateDistance(SampleData sampleData,
 			SampleData centroid) {
-		// TODO use Edulidean distance for now
+		// use Euclic distance for now
 		double rst = 0;
 		for (int i = 0; i < numOfAttr; i++) {
 			rst += Math.pow(

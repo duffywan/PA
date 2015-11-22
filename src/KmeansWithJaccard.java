@@ -9,7 +9,7 @@ public class KmeansWithJaccard extends KMeans {
 	}
 
 	@Override
-	protected Double calculateDistance(SampleData sampleData,
+	protected double calculateDistance(SampleData sampleData,
 			SampleData centroid) {
 		Double intersection = 0d, union = 0d;
 		for (int i = 0; i < numOfAttr; i++) {

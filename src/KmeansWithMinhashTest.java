@@ -1,9 +1,13 @@
+import java.util.List;
+
 public class KmeansWithMinhashTest extends KMeansTest {
 
 	public static void main(String[] args) {
-		KmeansWithMinhashTest test = new KmeansWithMinhashTest();
-		KmeansWithMinhash kMeans = new KmeansWithMinhash(2, test.dataset);
-		kMeans.run();
+		PreprocessingData p = new PreprocessingData();
+		List<SampleData> datasetWithTF = p.buildDatasetWithTE();
+		System.out.println(datasetWithTF);
+		KmeansWithMinhash kmm = new KmeansWithMinhash(4, datasetWithTF);
+		kmm.run();
 	}
 
 }
