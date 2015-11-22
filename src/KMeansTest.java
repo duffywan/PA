@@ -28,9 +28,11 @@ public class KMeansTest {
 	}
 
 	public static void main(String[] args) {
-		KMeansTest test = new KMeansTest();
-		KMeans kMeans = new KMeans(2, test.dataset);
-		kMeans.run();
+		KMeansTest kmt = new KMeansTest();
+		PreprocessingData p = new PreprocessingData();
+		List<SampleData> dataset = p.buildDataset();
+		KMeans km = new KMeans(2, kmt.dataset);
+		km.run();
 
 	}
 }

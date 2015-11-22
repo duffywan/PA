@@ -15,6 +15,8 @@ import opennlp.tools.tokenize.WhitespaceTokenizer;
 
 public class PreprocessingData {
 	public static final int NUM_OF_DOC = 20;
+	public static final String STOP_LIST_PATH = "./docs/stopword";
+	public static final String DATASET_PATH_PREFIX = "./docs/doc";
 	Map<String, Integer> strToId;
 	Map<Integer, Integer>[] tf;
 	Set<String> stopList;
@@ -35,12 +37,14 @@ public class PreprocessingData {
 	}
 
 	public List<SampleData> buildDataset() {
+		init();
 		for (int i = 0; i < NUM_OF_DOC; i++) {
-			String docPath = "./docs/doc" + i;
+			String docPath = DATASET_PATH_PREFIX + i;// TODO
 			tokenize(docPath);
 		}
 		List<SampleData> dataset = new ArrayList<>();
 		int numOfAttr = strToId.size();
+		System.out.println(numOfAttr);
 		for (int i = 0; i < NUM_OF_DOC; i++) {
 			List<Double> attributes = new ArrayList<>();
 			for (int j = 0; j < numOfAttr; j++) {
@@ -104,9 +108,27 @@ public class PreprocessingData {
 		return new String(chars, 0, writeIdx);
 	}
 
+	private void init() {
+		// read in stop word
+		try (BufferedReader br = new BufferedReader(new FileReader(new File(
+				STOP_LIST_PATH)))) {
+			String str = null;
+			while ((str = br.readLine()) != null) {
+				if (!stopList.contains(str)) {
+					stopList.add(str);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void main(String[] args) {
 		PreprocessingData p = new PreprocessingData();
 		List<SampleData> dataset = p.buildDataset();
+		for (int i = 0; i < dataset.size(); i++) {
+			// System.out.println(dataset.get(i));
+		}
 		KmeansWithJaccard km = new KmeansWithJaccard(4, dataset);
 		km.run();
 	}

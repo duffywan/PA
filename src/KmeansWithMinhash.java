@@ -26,17 +26,17 @@ public class KmeansWithMinhash extends KMeans {
 			minHashDataset.get(i).add(sampleData.attributes.get(i));
 			minHashDataset.get(i).add(centroid.attributes.get(i));
 		}
-		// TODO del trace
 		MinHash minHash = new MinHash(minHashDataset);
-		// TODO del trace
 		Double[][] sigs = minHash.run();
 		int agreeCount = 0;
 		for (int i = 0; i < minHash.numOfHash; i++) {
-			if (sigs[i][0] != 0d && sigs[i][1] != 0d) {
+			if (sigs[i][0] != 0 && sigs[i][1] != 0) {
 				agreeCount++;
 			}
 		}
-		return (double) (agreeCount / numOfAttr);
+		double rst = 1 - (agreeCount / numOfAttr);
+		return rst;
+
 	}
 
 	public static void main(String[] args) {
@@ -45,7 +45,22 @@ public class KmeansWithMinhash extends KMeans {
 		List<SampleData> dataset = new ArrayList<>();
 		dataset.add(new SampleData(s1, 0));
 		dataset.add(new SampleData(s2, 1));
-		KmeansWithMinhash km = new KmeansWithMinhash(2, dataset);
-		km.run();
+
+		List<SampleData> dataset1 = new ArrayList<>();
+		List<Double> l1 = new ArrayList<>();
+		l1.add(1d);
+		l1.add(0d);
+		List<Double> l2 = new ArrayList<>();
+		l2.add(0d);
+		l2.add(1d);
+		SampleData sd1 = new SampleData(l1, 0);
+		SampleData sd2 = new SampleData(l2, 2);
+		dataset1.add(sd1);
+		dataset1.add(sd1);
+		dataset1.add(sd2);
+		dataset1.add(sd2);
+		KmeansWithMinhash km = new KmeansWithMinhash(2, dataset1);
+		System.out.println(km.calculateDistance(sd1, sd2));
+		// km.run();
 	}
 }

@@ -21,10 +21,11 @@ public class KMeans {
 	 * This method randomly pick k centroids as the initial centroids
 	 */
 	private void init() {
+		int share = dataset.size() / k;
 		for (int i = 0; i < k; i++) {
-			clusters[i] = new ArrayList<Integer>();
-			clusters[i].add(i);
-			centroids[i] = dataset.get(i);
+			clusters[i] = new ArrayList<Integer>();// TODO
+			clusters[i].add(share * i);
+			centroids[i] = dataset.get(share * i);
 		}
 	}
 
@@ -52,11 +53,12 @@ public class KMeans {
 				SampleData currData = dataset.get(dataIndex);
 				Double minDis = Double.MAX_VALUE;
 				int newCluster = currData.cluster;
-				for (SampleData centroid : centroids) {
+				for (int i = 0; i < centroids.length; i++) {
+					SampleData centroid = centroids[i];
 					Double disToCentroid = calculateDistance(currData, centroid);
 					if (disToCentroid < minDis) {
 						minDis = disToCentroid;
-						newCluster = centroid.cluster;
+						newCluster = i;
 					}
 				}
 				if (newCluster != currData.cluster) {
@@ -75,7 +77,7 @@ public class KMeans {
 				System.out.print(i);
 				System.out.print(" members: ");
 				for (Integer memberIdx : clusters[i]) {
-					System.out.print(memberIdx);
+					System.out.print("," + memberIdx);
 				}
 				System.out.println("");
 			}

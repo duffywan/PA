@@ -13,11 +13,11 @@ public class KmeansWithJaccard extends KMeans {
 			SampleData centroid) {
 		Double intersection = 0d, union = 0d;
 		for (int i = 0; i < numOfAttr; i++) {
-			intersection += Math.min(sampleData.attributes.get(i),
+			intersection += 2 * Math.min(sampleData.attributes.get(i),
 					centroid.attributes.get(i));
 			union += sampleData.attributes.get(i) + centroid.attributes.get(i);
 		}
-		return intersection / union;
+		return 1 - intersection / union;
 	}
 
 	public static void main(String[] args) {
